@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="text-center mt-5">
+    <h1 class="fw-bold">Distraction-Free Learning</h1>
+    <p class="text-muted">A YouTube-like platform built only for serious aspirants.</p>
+
+    <div class="mt-4">
+        <a href="{% url 'users:login' %}" class="btn btn-primary me-2">Login</a>
+        <a href="{% url 'users:register' %}" class="btn btn-outline-primary">Register</a>
+    </div>
+</div>
+
+{% endblock %}

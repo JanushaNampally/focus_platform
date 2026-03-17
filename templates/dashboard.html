@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<h1>Dashboard</h1>
+
+<h2>Courses</h2>
+<ul>
+  {% for course in courses %}
+    <li>{{ course.name }}</li>
+  {% endfor %}
+</ul>
+
+<h2>Videos</h2>
+<ul>
+  {% for video in videos %}
+    <li>
+      <b>{{ video.title }}</b><br>
+      Course: {{ video.topic.subject.course.name }}<br>
+      Subject: {{ video.topic.subject.name }}<br>
+      Topic: {{ video.topic.name }}<br>
+
+      <iframe width="300" height="200"
+        src="https://www.youtube.com/embed/{{ video.youtube_id }}"
+        frameborder="0" allowfullscreen>
+      </iframe>
+    </li>
+  {% endfor %}
+</ul>
+
+</body>
+</html>

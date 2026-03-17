@@ -1,0 +1,7 @@
+<h2>Why do you want to achieve your goal?</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <textarea name="goal_reason" rows="5" cols="40"></textarea><br><br>
+    <button type="submit">Save Goal</button>
+</form>

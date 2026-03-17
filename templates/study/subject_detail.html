@@ -1,0 +1,13 @@
+<h2>{{ subject.name }}</h2>
+
+<h3>Videos</h3>
+
+<ul>
+{% for video in videos %}
+    <li>
+        <a href="{% url 'video_watch' video.id %}">
+            {{ video.title }}
+        </a>
+    </li>
+{% endfor %}
+</ul>
