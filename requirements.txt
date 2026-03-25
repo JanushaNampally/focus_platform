@@ -1,0 +1,44 @@
+# Core Django & Web Framework
+Django==5.2.11
+djangorestframework==3.14.0
+django-cors-headers==4.3.1
+
+# Database & ORM
+psycopg2-binary==2.9.9
+python-decouple==3.8
+
+# NLP & ML
+transformers==4.38.2
+torch==2.2.1
+scikit-learn==1.4.1
+numpy==1.24.3
+pandas==2.1.4
+
+# YouTube API
+google-api-python-client==2.108.0
+google-auth==2.27.0
+google-auth-oauthlib==1.2.0
+google-auth-httplib2==0.2.0
+requests==2.31.0
+
+# Caching
+redis==5.0.1
+
+# Monitoring & Logging
+sentry-sdk==1.39.2
+
+# Testing
+pytest==7.4.4
+pytest-django==4.7.0
+
+# Development
+black==24.1.1
+flake8==7.0.0
+isort==5.13.2
+
+# Production Server
+gunicorn==21.2.0
+whitenoise==6.6.0
+
+# Security
+cryptography==41.0.7

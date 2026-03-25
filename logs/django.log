@@ -1,3 +1,230 @@
 INFO 2026-03-18 01:53:44,481 autoreload 30644 26168 Watching for file changes with StatReloader
 INFO 2026-03-18 01:54:02,587 autoreload 30644 26168 C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\focus\models.py changed, reloading.
 INFO 2026-03-18 01:54:03,554 autoreload 3728 13544 Watching for file changes with StatReloader
+ERROR 2026-03-18 01:54:11,062 log 3728 27028 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+sqlite3.OperationalError: no such column: users_profile.total_watch_time
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\core\views.py", line 13, in dashboard
+    profile, created = Profile.objects.get_or_create(user=request.user)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\models\query.py", line 948, in get_or_create
+    return self.get(**kwargs), False
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\models\query.py", line 631, in get
+    num = len(clone)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\models\query.py", line 368, in __len__
+    self._fetch_all()
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\models\query.py", line 1954, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\models\query.py", line 93, in __iter__
+    results = compiler.execute_sql(
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1623, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+django.db.utils.OperationalError: no such column: users_profile.total_watch_time
+ERROR 2026-03-18 01:54:11,091 basehttp 3728 27028 "GET /dashboard/ HTTP/1.1" 500 164124
+INFO 2026-03-18 13:01:16,318 autoreload 18096 22480 Watching for file changes with StatReloader
+INFO 2026-03-18 13:01:37,007 basehttp 18096 2688 "GET / HTTP/1.1" 200 1935
+WARNING 2026-03-18 13:01:37,697 log 18096 2688 Not Found: /favicon.ico
+WARNING 2026-03-18 13:01:37,699 basehttp 18096 2688 "GET /favicon.ico HTTP/1.1" 404 3144
+INFO 2026-03-18 13:01:40,204 basehttp 18096 2688 "GET /users/login/ HTTP/1.1" 200 2292
+INFO 2026-03-18 13:01:46,079 basehttp 18096 2688 "POST /users/login/ HTTP/1.1" 302 0
+ERROR 2026-03-18 13:01:46,604 log 18096 2688 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+sqlite3.OperationalError: no such column: users_profile.total_watch_time
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\contrib\auth\decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\core\views.py", line 13, in dashboard
+    profile, created = Profile.objects.get_or_create(user=request.user)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\models\query.py", line 948, in get_or_create
+    return self.get(**kwargs), False
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\models\query.py", line 631, in get
+    num = len(clone)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\models\query.py", line 368, in __len__
+    self._fetch_all()
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\models\query.py", line 1954, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\models\query.py", line 93, in __iter__
+    results = compiler.execute_sql(
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1623, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+django.db.utils.OperationalError: no such column: users_profile.total_watch_time
+ERROR 2026-03-18 13:01:46,615 basehttp 18096 2688 "GET /dashboard/ HTTP/1.1" 500 164288
+INFO 2026-03-18 13:01:52,163 basehttp 18096 2688 "GET /users/login/ HTTP/1.1" 200 2292
+INFO 2026-03-18 13:01:55,389 basehttp 18096 2688 "POST /users/login/ HTTP/1.1" 200 2411
+INFO 2026-03-18 13:02:09,700 basehttp 18096 2688 "POST /users/login/ HTTP/1.1" 200 2411
+INFO 2026-03-18 13:02:15,491 basehttp 18096 2688 "POST /users/login/ HTTP/1.1" 200 2411
+INFO 2026-03-18 13:12:05,177 autoreload 18096 22480 C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\courses\migrations\0001_initial.py changed, reloading.
+INFO 2026-03-18 13:12:06,485 autoreload 8776 13664 Watching for file changes with StatReloader
+INFO 2026-03-18 13:12:36,454 autoreload 13392 20840 Watching for file changes with StatReloader
+INFO 2026-03-18 13:13:32,004 basehttp 8776 20232 "GET / HTTP/1.1" 200 1935
+INFO 2026-03-18 13:13:32,339 basehttp 8776 20232 - Broken pipe from ('127.0.0.1', 59637)
+INFO 2026-03-18 13:14:38,225 basehttp 8776 31692 "GET / HTTP/1.1" 200 1935
+INFO 2026-03-18 13:14:40,292 basehttp 8776 25236 "GET /admin/ HTTP/1.1" 302 0
+INFO 2026-03-18 13:14:42,364 basehttp 8776 31268 "GET /dashboard/ HTTP/1.1" 302 0
+INFO 2026-03-18 13:14:44,430 basehttp 8776 15576 "GET /users/login/ HTTP/1.1" 200 2292
+WARNING 2026-03-18 13:14:46,507 log 8776 22220 Not Found: /courses/
+WARNING 2026-03-18 13:14:46,509 basehttp 8776 22220 "GET /courses/ HTTP/1.1" 404 3269
+INFO 2026-03-18 13:17:45,477 basehttp 8776 30656 "GET / HTTP/1.1" 200 1935
+INFO 2026-03-18 13:17:47,526 basehttp 8776 28016 "GET /admin/ HTTP/1.1" 302 0
+INFO 2026-03-18 13:17:49,571 basehttp 8776 5748 "GET /dashboard/ HTTP/1.1" 302 0
+INFO 2026-03-18 13:17:51,607 basehttp 8776 23648 "GET /users/login/ HTTP/1.1" 200 2292
+WARNING 2026-03-18 13:17:53,689 log 8776 28260 Not Found: /courses/
+WARNING 2026-03-18 13:17:53,689 basehttp 8776 28260 "GET /courses/ HTTP/1.1" 404 3269
+INFO 2026-03-18 13:18:59,687 basehttp 8776 17004 "GET / HTTP/1.1" 200 1935
+INFO 2026-03-18 13:20:15,463 basehttp 8776 28300 "POST /users/login/ HTTP/1.1" 200 2411
+INFO 2026-03-18 13:20:21,013 basehttp 8776 28300 "POST /users/login/ HTTP/1.1" 200 2411
+INFO 2026-03-18 13:22:15,619 basehttp 8776 28300 "POST /users/login/ HTTP/1.1" 200 2411
+INFO 2026-03-18 13:22:21,837 basehttp 8776 28300 "POST /users/login/ HTTP/1.1" 200 2411
+INFO 2026-03-18 13:22:54,363 autoreload 24160 30824 Watching for file changes with StatReloader
+INFO 2026-03-18 13:22:58,771 basehttp 24160 27208 "GET / HTTP/1.1" 200 1935
+INFO 2026-03-18 13:23:00,171 basehttp 24160 27208 "GET /users/login/ HTTP/1.1" 200 2292
+INFO 2026-03-18 13:23:04,260 basehttp 24160 27208 "POST /users/login/ HTTP/1.1" 200 2411
+INFO 2026-03-18 13:23:07,429 basehttp 24160 27208 "GET /users/login/ HTTP/1.1" 200 2292
+INFO 2026-03-18 13:23:10,130 basehttp 24160 27208 "GET /users/register/ HTTP/1.1" 200 2472
+ERROR 2026-03-18 13:23:17,545 log 24160 27208 Internal Server Error: /users/register/
+Traceback (most recent call last):
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\users\views.py", line 30, in register_view
+    return redirect('user_login')
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\shortcuts.py", line 51, in redirect
+    resolve_url(to, *args, **kwargs),
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\shortcuts.py", line 184, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\urls\base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'user_login' not found. 'user_login' is not a valid view function or pattern name.
+ERROR 2026-03-18 13:23:17,552 basehttp 24160 27208 "POST /users/register/ HTTP/1.1" 500 99185
+INFO 2026-03-18 13:23:58,287 autoreload 13392 20840 C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\users\views.py changed, reloading.
+INFO 2026-03-18 13:23:58,850 autoreload 24160 30824 C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\users\views.py changed, reloading.
+INFO 2026-03-18 13:23:58,961 autoreload 22196 22312 Watching for file changes with StatReloader
+INFO 2026-03-18 13:23:59,623 autoreload 31328 13772 Watching for file changes with StatReloader
+INFO 2026-03-18 13:24:18,925 autoreload 31328 13772 C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\users\views.py changed, reloading.
+INFO 2026-03-18 13:24:19,242 autoreload 22196 22312 C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\users\views.py changed, reloading.
+INFO 2026-03-18 13:24:19,578 autoreload 28536 19764 Watching for file changes with StatReloader
+INFO 2026-03-18 13:24:19,887 autoreload 15504 31732 Watching for file changes with StatReloader
+INFO 2026-03-20 00:10:48,045 autoreload 15380 19712 Watching for file changes with StatReloader
+ERROR 2026-03-20 00:10:52,173 log 15380 18452 Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\urls\base.py", line 81, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'core'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\core\views.py", line 9, in landing
+    return render(request, "core/landing.html")
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\template\base.py", line 172, in render
+    return self._render(context)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\template\base.py", line 164, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\template\base.py", line 1018, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\template\base.py", line 1018, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\template\base.py", line 979, in render_annotated
+    return self.render(context)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\template\base.py", line 164, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\template\base.py", line 1018, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\template\base.py", line 1018, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\template\base.py", line 979, in render_annotated
+    return self.render(context)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\venv\lib\site-packages\django\urls\base.py", line 92, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'core' is not a registered namespace
+ERROR 2026-03-20 00:10:52,179 basehttp 15380 18452 "GET / HTTP/1.1" 500 157244
+WARNING 2026-03-20 00:10:52,960 log 15380 18452 Not Found: /favicon.ico
+WARNING 2026-03-20 00:10:52,961 basehttp 15380 18452 "GET /favicon.ico HTTP/1.1" 404 3144
+INFO 2026-03-20 00:11:54,072 autoreload 15380 19712 C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\focus_platform\urls.py changed, reloading.
+INFO 2026-03-20 00:11:55,351 autoreload 22132 35204 Watching for file changes with StatReloader
+INFO 2026-03-20 00:12:10,281 autoreload 22132 35204 C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\core\views.py changed, reloading.
+INFO 2026-03-20 00:12:11,242 autoreload 34460 33104 Watching for file changes with StatReloader
+INFO 2026-03-20 00:12:13,635 autoreload 34460 33104 C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\core\views.py changed, reloading.
+INFO 2026-03-20 00:12:14,597 autoreload 32328 34872 Watching for file changes with StatReloader
+INFO 2026-03-20 00:14:37,135 autoreload 32328 34872 C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\core\views.py changed, reloading.
+INFO 2026-03-20 00:14:37,779 autoreload 4632 34272 Watching for file changes with StatReloader
+INFO 2026-03-20 00:14:38,984 autoreload 4632 34272 C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\core\views.py changed, reloading.
+INFO 2026-03-20 00:14:39,682 autoreload 33224 34036 Watching for file changes with StatReloader
+INFO 2026-03-20 00:14:40,874 autoreload 33224 34036 C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\core\views.py changed, reloading.
+INFO 2026-03-20 00:14:41,431 autoreload 23664 35656 Watching for file changes with StatReloader
+INFO 2026-03-20 00:14:43,645 autoreload 23664 35656 C:\Users\nampally janusha\OneDrive - K L University\Desktop\projects\focus_platform\core\views.py changed, reloading.
+INFO 2026-03-20 00:14:44,659 autoreload 31524 20196 Watching for file changes with StatReloader
+INFO 2026-03-20 00:18:20,371 autoreload 14640 1076 Watching for file changes with StatReloader

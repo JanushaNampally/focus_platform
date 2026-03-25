@@ -1,0 +1,286 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - FocusTube{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-hero {
+        background: linear-gradient(135deg, #2d5a52 0%, #6b9080 100%);
+        color: white;
+        padding: 3rem 0;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+    }
+
+    .dashboard-hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .goal-card {
+        background: white;
+        border-left: 5px solid #ff6b35;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+    }
+
+    .goal-card h4 {
+        color: #2d5a52;
+        margin-bottom: 1rem;
+    }
+
+    .goal-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #555;
+        font-style: italic;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="dashboard-hero">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1>Welcome back, {{ user.first_name }}! 🎯</h1>
+                <p class="mb-0">Ready to focus today? You're on a <strong>{{ profile.current_streak }}</strong> day streak!</p>
+            </div>
+            <div class="text-end">
+                <div style="font-size: 3rem; font-weight: bold;">{{ profile.current_streak }}</div>
+                <small>Days in a Row</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Your Goal Section -->
+    {% if profile.goal_reason %}
+    <div class="goal-card">
+        <h4>📌 Your Learning Goal</h4>
+        <div class="goal-text">
+            "{{ profile.goal_reason }}"
+        </div>
+        <small class="text-muted d-block mt-2">Set on {{ profile.created_at|date:"M d, Y" }}</small>
+    </div>
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+        <i class="fas fa-lightbulb"></i> <strong>Set your goal!</strong> 
+        <a href="{% url 'users:goal_setup' %}" class="alert-link">Click here</a> to define your learning objective for better personalization.
+    </div>
+    {% endif %}
+
+    <!-- Quick Stats Row -->
+    <div class="stats-grid mb-4">
+        <div class="stat-card">
+            <div class="stat-value">{{ profile.total_watch_hours }}</div>
+            <div class="stat-label">Total Watch Hours</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ profile.current_streak }}</div>
+            <div class="stat-label">🔥 Streak</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ profile.total_points }}</div>
+            <div class="stat-label">Points Earned</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ profile.consistency_score|floatformat:0 }}%</div>
+            <div class="stat-label">Consistency</div>
+        </div>
+    </div>
+
+    <!-- Achievement Badges Section -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="fas fa-trophy"></i> Achievements</h5>
+        </div>
+        <div class="card-body">
+            <div class="d-flex flex-wrap justify-content-start gap-3">
+                <!-- Starter Badge -->
+                <div class="achievement-badge achievement-starter {% if profile.current_streak == 0 %}achievement-locked{% endif %}" data-bs-toggle="tooltip" title="Complete your first focus session">
+                    🚀 Starter
+                </div>
+
+                <!-- Learner Badge -->
+                <div class="achievement-badge achievement-learner {% if profile.current_streak < 7 %}achievement-locked{% endif %}" data-bs-toggle="tooltip" title="Maintain a 7-day streak">
+                    📚 Learner
+                </div>
+
+                <!-- Master Badge -->
+                <div class="achievement-badge achievement-master {% if profile.current_streak < 30 %}achievement-locked{% endif %}" data-bs-toggle="tooltip" title="Maintain a 30-day streak">
+                    🎓 Master
+                </div>
+
+                <!-- Dedicated Badge -->
+                <div class="achievement-badge achievement-dedicated {% if profile.total_watch_hours < 50 %}achievement-locked{% endif %}" data-bs-toggle="tooltip" title="Watch 50+ hours">
+                    ⭐ Dedicated
+                </div>
+            </div>
+            <small class="text-muted d-block mt-3">Keep learning to unlock more badges!</small>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <button class="btn btn-focus w-100" onclick="window.FocusMode.start(25)">
+                <i class="fas fa-hourglass-start"></i> Start 25-Min Focus Session
+            </button>
+        </div>
+        <div class="col-md-6">
+            <a href="{% url 'core:explore' %}" class="btn btn-secondary w-100">
+                <i class="fas fa-play-circle"></i> Explore Videos
+            </a>
+        </div>
+    </div>
+
+    <!-- AI-Powered Recommendations Section -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-sparkles"></i> AI-Recommended for You</h5>
+                <small class="text-muted">Powered by ML</small>
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="text-muted">Why recommended: Based on your learning history, focus duration, and similar learners' preferences</p>
+            <div id="videoFeed" class="video-feed"></div>
+        </div>
+    </div>
+
+    <!-- Trending Videos -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="fas fa-flame"></i> Trending This Week</h5>
+        </div>
+        <div class="card-body">
+            <div id="trendingVideoFeed" class="video-feed"></div>
+        </div>
+    </div>
+
+    <!-- Progress Tracker -->
+    {% if subjects %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="fas fa-chart-line"></i> Learning Progress</h5>
+        </div>
+        <div class="card-body">
+            {% for subject in subjects %}
+            <div class="mb-3">
+                <div class="d-flex justify-content-between mb-2">
+                    <strong>{{ subject.name }}</strong>
+                    <small class="text-muted">{{ subject.completion_percentage|floatformat:0 }}%</small>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" style="width: {{ subject.completion_percentage }}%"></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Study Streak Chart -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0"><i class="fas fa-calendar-alt"></i> Study Activity (Last 7 Days)</h5>
+        </div>
+        <div class="card-body">
+            <div id="activityChart" style="height: 300px;">
+                <!-- Will be populated by Chart.js -->
+                <canvas id="activityCanvas"></canvas>
+            </div>
+            <small class="text-muted d-block mt-2">📊 Keep your activity consistent for better learning outcomes</small>
+        </div>
+    </div>
+</div>
+
+<!-- Daily Challenge Modal -->
+<div class="modal fade" id="dailyChallengeModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title">🎯 Today's Challenge</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <h4 class="mb-3">Watch 3 videos today!</h4>
+                <p class="text-muted">Complete 3 videos to get <strong>+50 bonus points</strong> and maintain your streak.</p>
+                <div class="progress mb-3">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" id="challengeProgress" style="width: 33%"></div>
+                </div>
+                <small id="challengeStatus">1 of 3 videos watched</small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Maybe Later</button>
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Let's Go!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script>
+    // Show daily challenge modal
+    {% if not challenge_completed %}
+    setTimeout(() => {
+        new bootstrap.Modal(document.getElementById('dailyChallengeModal')).show();
+    }, 1000);
+    {% endif %}
+
+    // Activity Chart
+    const ctx = document.getElementById('activityCanvas');
+    if (ctx) {
+        const activityData = {{ activity_json|safe }};
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: activityData.labels,
+                datasets: [{
+                    label: 'Watch Time (hours)',
+                    data: activityData.data,
+                    backgroundColor: '#6b9080',
+                    borderColor: '#2d5a52',
+                    borderWidth: 1,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 8
+                    }
+                }
+            }
+        });
+    }
+
+    // Load video recommendations on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const userId = "{{ user.id }}";
+        
+        // Load AI recommendations
+        VideoManager.loadRecommendations();
+        
+        // Update streak and check achievements
+        if (userId) {
+            Gamification.updateStreak(userId);
+            Gamification.checkAchievements(userId);
+        }
+    });
+</script>
+{% endblock %}
