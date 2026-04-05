@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Onboarding</title>
+</head>
+<body>
+    <h1>Set Your Learning Goal</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Goal:</label><br>
+        <input type="text" name="goal" required><br><br>
+
+        <label>Daily Target Minutes:</label><br>
+        <input type="number" name="daily_target_minutes" required><br><br>
+
+        <button type="submit">Save Goal</button>
+    </form>
+</body>
+</html>
