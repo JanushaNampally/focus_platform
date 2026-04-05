@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .models import UserProfile
-
 from django.http import HttpResponse
 
 def home(request):
@@ -20,10 +19,21 @@ def onboarding(request):
             daily_target_minutes=daily_target
         )
 
-        return redirect("success")
+        return redirect("dashboard")
 
     return render(request, "users/onboarding.html")
 
 
 def success(request):
     return render(request, "users/success.html")
+
+def dashboard(request):
+    profile = UserProfile.objects.first()
+    total_sessions = FocusSession.objects.filter(completed=True).count()
+
+    context = {
+        "profile": profile,
+        "total_sessions": total_sessions
+    }
+
+    return render(request, "users/dashboard.html", context)

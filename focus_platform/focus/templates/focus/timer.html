@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Focus Timer</title>
+</head>
+<body>
+    <h1>Focus Session Timer</h1>
+
+    <h2 id="timer">25:00</h2>
+
+    <button onclick="startTimer()">Start Timer</button>
+    <button onclick="resetTimer()">Reset</button>
+
+    <br><br>
+
+    <a id="completeLink" href="/focus/complete/" style="display:none;">
+        Complete Session
+    </a>
+
+    <script>
+        let totalSeconds = 25 * 60;
+        let timerRunning = false;
+        let interval;
+
+        function updateDisplay() {
+            let minutes = Math.floor(totalSeconds / 60);
+            let seconds = totalSeconds % 60;
+
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            document.getElementById("timer").innerText =
+                minutes + ":" + seconds;
+        }
+
+        function startTimer() {
+            if (timerRunning) return;
+
+            timerRunning = true;
+
+            interval = setInterval(function () {
+                if (totalSeconds > 0) {
+                    totalSeconds--;
+                    updateDisplay();
+                } else {
+                    clearInterval(interval);
+                    timerRunning = false;
+                    alert("Session completed!");
+                    document.getElementById("completeLink").style.display = "block";
+                }
+            }, 1000);
+        }
+
+        function resetTimer() {
+            clearInterval(interval);
+            totalSeconds = 25 * 60;
+            timerRunning = false;
+            updateDisplay();
+        }
+
+        updateDisplay();
+    </script>
+</body>
+</html>
