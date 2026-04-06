@@ -8,5 +8,7 @@ class FocusSession(models.Model):
     duration_minutes = models.IntegerField(default=25)
     completed = models.BooleanField(default=False)
 
+    session_date = models.DateField(auto_now_add=True)
+
     def __str__(self):
-        return f"{self.user.username} - {self.duration_minutes} min"
+        return f"{self.user.username} - {self.session_date}"

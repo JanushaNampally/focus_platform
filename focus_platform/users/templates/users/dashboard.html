@@ -11,11 +11,30 @@
 
     <h2>Daily Target</h2>
     <p>{{ profile.daily_target_minutes }} minutes</p>
+
     <h2>Total Focus Sessions</h2>
-<p>{{ total_sessions }}</p>
+    <p>{{ total_sessions }}</p>
+
+    <h2>Current Streak</h2>
+    <p>{{ streak }} days</p>
+
+    <h2>Consistency Score</h2>
+    <p>{{ consistency_score }}/100</p>
+
+    <h2>Motivation</h2>
+    <p>{{ motivation }}</p>
 
     <br>
 
     <a href="/focus/timer/">Start Focus Session</a>
+    <h2>Recommended Videos</h2>
+
+<h2>Recommended Videos</h2>
+
+<ul>
+    {% for video in top_videos %}
+        <li>{{ video.title }} - {{ video.topic }}</li>
+    {% endfor %}
+</ul>
 </body>
 </html>
