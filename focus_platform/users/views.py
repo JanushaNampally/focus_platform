@@ -5,9 +5,9 @@ from datetime import date, timedelta
 
 from .models import UserProfile
 from focus.models import FocusSession
-from videos.models import Video
 from ai_engine.ranking import calculate_video_score
-
+from videos.models import Video, WatchHistory
+from ai_engine.churn_predictor import predict_churn
 
 def home(request):
     return HttpResponse("Welcome to Focus Platform")
@@ -38,7 +38,7 @@ def success(request):
 def dashboard(request):
     profile = UserProfile.objects.first()
     sessions = FocusSession.objects.filter(completed=True)
-
+    total_videos = Video.objects.count()
     total_sessions = sessions.count()
 
     today = date.today()
@@ -54,22 +54,34 @@ def dashboard(request):
 
     consistency_score = min(100, streak * 10)
 
-    if streak >= 5:
+    if churn_risk > 0.7:
+        motivation = "High risk detected. Start a quick 10-minute focus session now."
+    elif streak >= 5:
         motivation = "Excellent discipline! Keep the momentum."
     elif streak >= 2:
         motivation = "Good consistency. Stay focused."
     else:
         motivation = "Start your streak today."
-
+    churn_risk = predict_churn(
+        streak,
+        total_sessions,
+        days_inactive
+    )
     # DAY 6 VIDEO RECOMMENDATION LOGIC
-    videos = Video.objects.all()
+    user_goal = profile.goal if profile else ""
+
+    watched_topics = WatchHistory.objects.filter(
+        user=User.objects.first()
+    ).values_list("video__topic", flat=True)
 
     ranked_videos = sorted(
-        videos,
-        key=lambda video: calculate_video_score(video),
+        video,
+        key=lambda video: calculate_video_score(video, user_goal)
+        + (2000 if video.topic in watched_topics else 0),
         reverse=True
     )
 
+  
     top_videos = ranked_videos[:3]
 
     context = {
@@ -78,7 +90,8 @@ def dashboard(request):
         "streak": streak,
         "consistency_score": consistency_score,
         "motivation": motivation,
-        "top_videos": top_videos
+        "top_videos": top_videos,
+        "total_videos": total_videos,
     }
 
     return render(request, "users/dashboard.html", context)

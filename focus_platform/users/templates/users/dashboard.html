@@ -29,12 +29,28 @@
     <a href="/focus/timer/">Start Focus Session</a>
     <h2>Recommended Videos</h2>
 
-<h2>Recommended Videos</h2>
-
 <ul>
     {% for video in top_videos %}
-        <li>{{ video.title }} - {{ video.topic }}</li>
+        <li>
+            <a href="/videos/watch/{{ video.id }}/">
+                {{ video.title }} - {{ video.topic }}
+            </a>
+        </li>
     {% endfor %}
 </ul>
+<h3>AI Recommendation Logic</h3>
+<p>
+Recommendations are personalized based on your goal,
+watch history, popularity signals, and predicted engagement.
+</p>
+<h3>Why these videos?</h3>
+<p>Recommended based on your goal: {{ profile.goal }}</p>
+<h2>Retention Risk</h2>
+<p>{{ churn_risk }}</p>
+
+<h3>AI Motivation Trigger</h3>
+<p>{{ motivation }}</p>
+<h2>Content Library</h2>
+<p>{{ total_videos }} curated videos available</p>
 </body>
 </html>
