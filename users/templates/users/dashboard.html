@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Focus Platform - Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'users/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Nunito', sans-serif; }
+        .navbar-brand { font-family: 'Nunito', sans-serif; }
+    </style>
+</head>
+<body>
+    <!-- Netflix-style Navigation -->
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">🎯 focus</a>
+        <ul class="navbar-nav">
+            <li><a href="/users/dashboard/" class="nav-link active">🏠 Home</a></li>
+            <li><a href="/focus/timer/" class="nav-link">⏱️ Timer</a></li>
+            <li><a href="/users/onboarding/" class="nav-link">⚙️ Settings</a></li>
+        </ul>
+    </nav>
+
+    <!-- Netflix Hero Section -->
+    <div class="hero">
+        <h1>Welcome back, <span class="highlight">Focuser!</span></h1>
+        <p>Keep your streak alive. Every session brings you closer to mastering your goals — stay consistent, stay focused.</p>
+        <div class="hero-actions">
+            <a href="/focus/timer/" class="btn btn-duolingo btn-lg">▶ Start a Session</a>
+            <a href="/users/onboarding/" class="btn btn-secondary btn-lg">🎯 Set Goal</a>
+        </div>
+    </div>
+
+    <!-- Duolingo Motivation Banner -->
+    <div class="motivation-banner-duo fade-in-up delay-1">
+        <span class="icon">💡</span>
+        <span class="text">{{ motivation }}</span>
+    </div>
+
+    <!-- Stats Grid (Duolingo Gamification) -->
+    <div class="stats-grid fade-in-up delay-2">
+        <div class="stat-card-duo">
+            <div class="stat-icon-duo">🎯</div>
+            <div class="stat-value-duo" style="font-size:1.2rem; color: var(--text-primary);">{{ profile.goal|default:"Not set" }}</div>
+            <div class="stat-label-duo">Your Goal</div>
+        </div>
+
+        <div class="stat-card-duo">
+            <div class="stat-icon-duo">⏱️</div>
+            <div class="stat-value-duo">{{ profile.daily_target_minutes|default:"0" }}</div>
+            <div class="stat-label-duo">Daily Target</div>
+            <div class="xp-bar"><div class="xp-bar-fill" style="width: {% widthratio total_sessions 30 100 %}%;"></div></div>
+        </div>
+
+        <div class="stat-card-duo">
+            <div class="stat-icon-duo">📊</div>
+            <div class="stat-value-duo">{{ total_sessions }}</div>
+            <div class="stat-label-duo">Sessions Done</div>
+        </div>
+
+        <div class="stat-card-duo">
+            <div class="stat-icon-duo">🔥</div>
+            <div class="stat-value-duo stat-lingot">{{ streak }}</div>
+            <div class="stat-label-duo">Day Streak</div>
+            <div class="streak-badge {% if streak > 0 %}fire{% else %}safe{% endif %}">
+                {% if streak > 0 %}🔥 {{ streak }} day streak{% else %}💤 Start your streak{% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Row: Consistency + Content + Risk -->
+    <div class="stats-grid" style="padding-top: 0;">
+        <div class="stat-card-duo">
+            <div class="stat-icon-duo">⭐</div>
+            <div class="stat-value-duo">{{ consistency_score }}/100</div>
+            <div class="stat-label-duo">Consistency</div>
+            <div class="xp-bar"><div class="xp-bar-fill" style="width: {{ consistency_score }}%;"></div></div>
+        </div>
+
+        <div class="stat-card-duo">
+            <div class="stat-icon-duo">📚</div>
+            <div class="stat-value-duo">{{ total_videos }}</div>
+            <div class="stat-label-duo">Videos Available</div>
+        </div>
+
+        <div class="stat-card-duo">
+            <div class="stat-icon-duo">⚠️</div>
+            <div class="risk-gauge">
+                {% if churn_risk > 0.7 %}
+                    <span class="risk-dot high"></span>
+                    <span class="risk-value" style="color: var(--pink);">High Risk</span>
+                {% elif churn_risk > 0.3 %}
+                    <span class="risk-dot medium"></span>
+                    <span class="risk-value" style="color: var(--secondary);">Medium Risk</span>
+                {% else %}
+                    <span class="risk-dot low"></span>
+                    <span class="risk-value" style="color: var(--primary);">Low Risk</span>
+                {% endif %}
+            </div>
+            <div class="stat-label-duo">Retention Risk</div>
+            <div style="font-size:0.8rem; color: var(--text-muted); margin-top:0.3rem;">{{ churn_risk }}% probability</div>
+        </div>
+
+        <div class="stat-card-duo">
+            <div class="stat-icon-duo">🏆</div>
+            <div class="stat-value-duo" style="font-size:1.4rem;">
+                {% if streak >= 10 %}
+                    🔥 Legend
+                {% elif streak >= 5 %}
+                    ⚡ On Fire
+                {% elif streak >= 2 %}
+                    🌱 Consistent
+                {% else %}
+                    🌟 Beginner
+                {% endif %}
+            </div>
+            <div class="stat-label-duo">Your League</div>
+            <span class="level-badge">Focus League</span>
+        </div>
+    </div>
+
+    <!-- Netflix-style Category Row: Recommended Videos -->
+    <div class="category-section fade-in-up delay-4">
+        <div class="category-header">
+            <h2>🎬 Recommended for You</h2>
+            <span class="category-badge">AI Curated</span>
+        </div>
+        <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.95rem;">
+            Based on your goal: <strong style="color: var(--primary);">{{ profile.goal|default:"Getting Started" }}</strong>
+        </p>
+        {% if top_videos %}
+            <div class="video-row">
+                {% for video in top_videos %}
+                    <div class="video-card-sm">
+                        <div class="play-icon">▶️</div>
+                        <div class="info">
+                            <div class="title">{{ video.title }}</div>
+                            <div class="topic">{{ video.topic }}</div>
+                        </div>
+                        <a href="/videos/watch/{{ video.id }}/" class="topic-badge">Watch →</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">📹</div>
+                <p>No videos yet. Click <strong>"Fetch Videos"</strong> below to get started!</p>
+                <a href="/videos/fetch-live/" class="btn btn-duolingo" style="margin-top: 1rem;">🔄 Fetch Videos</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- AI Recommendation Info (Netflix "More Info" style) -->
+    <div class="category-section" style="padding-top: 0;">
+        <div class="content-card" style="max-width: 100%; min-width: auto; padding: 1.5rem;">
+            <div class="content-card-body">
+                <div class="content-card-title">🤖 AI Recommendation Engine</div>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+                    Your recommendations are powered by our AI engine that analyzes your learning goal, 
+                    watch history, video popularity signals, and predicted engagement scores to deliver 
+                    the most relevant content for your journey.
+                </p>
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <span class="content-tag">🧠 ML Ranking</span>
+                    <span class="content-tag">📈 Engagement Predictor</span>
+                    <span class="content-tag">🎯 Goal Matching</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding: 0 4rem 3rem;">
+        <a href="/videos/fetch-live/" class="btn btn-secondary">🔄 Refresh Video Library</a>
+    </div>
+</body>
+</html>
+

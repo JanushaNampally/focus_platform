@@ -1,0 +1,855 @@
+/* ==============================================
+   FOCUS PLATFORM - Netflix + Duolingo Hybrid
+   Dark theme + Gamification + Playful UI
+   ============================================== */
+
+:root {
+    /* Netflix Dark */
+    --bg-primary: #141414;
+    --bg-secondary: #1a1a2e;
+    --bg-card: #1e1e2e;
+    --bg-card-hover: #2a2a3e;
+    
+    /* Duolingo Green */
+    --primary: #58cc02;
+    --primary-dark: #46a302;
+    --primary-light: #89e219;
+    --primary-glow: rgba(88, 204, 2, 0.3);
+    
+    /* Accents */
+    --secondary: #ff9600;
+    --blue: #1cb0f6;
+    --pink: #ff4b4b;
+    --purple: #ce82ff;
+    
+    /* Text */
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --text-muted: #6c6c6c;
+    
+    /* UI */
+    --radius: 16px;
+    --radius-sm: 12px;
+    --radius-xs: 8px;
+    --shadow: 0 4px 20px rgba(0,0,0,0.3);
+    --shadow-lg: 0 8px 30px rgba(0,0,0,0.5);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Duolingo fonts */
+    --font: 'Feather', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Nunito', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: var(--font);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ==============================================
+   NETFLIX-STYLE NAVIGATION
+   ============================================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    transition: all 0.3s;
+    background: linear-gradient(180deg, rgba(20,20,20,0.9) 0%, transparent 100%);
+}
+
+.navbar:hover {
+    background: linear-gradient(180deg, rgba(20,20,20,0.95) 0%, rgba(20,20,20,0.8) 100%);
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-shadow: 0 0 20px var(--primary-glow);
+    letter-spacing: -0.5px;
+}
+
+.navbar-brand:hover {
+    color: var(--primary-light);
+    transform: scale(1.02);
+}
+
+.navbar-nav {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+    align-items: center;
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: var(--radius-xs);
+    transition: var(--transition);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.nav-link:hover {
+    color: var(--text-primary);
+    background: rgba(255,255,255,0.1);
+}
+
+.nav-link.active {
+    color: var(--text-primary);
+    background: rgba(88,204,2,0.2);
+    border: 1px solid rgba(88,204,2,0.3);
+}
+
+/* ==============================================
+   HERO SECTION (Netflix Style)
+   ============================================== */
+.hero {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    background: linear-gradient(135deg, #141414 0%, #1a1a2e 50%, #141414 100%);
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(88,204,2,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 20%, rgba(28,176,246,0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero .highlight {
+    background: linear-gradient(135deg, var(--primary), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero p {
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+    flex-wrap: wrap;
+}
+
+/* ==============================================
+   DUOLINGO-STYLE BUTTONS
+   ============================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.9rem 2rem;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: var(--font);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 15px var(--primary-glow);
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    box-shadow: 0 6px 25px var(--primary-glow);
+}
+
+.btn-secondary {
+    background: rgba(255,255,255,0.1);
+    color: var(--text-primary);
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: var(--primary);
+}
+
+.btn-lg {
+    padding: 1.2rem 2.5rem;
+    font-size: 1.1rem;
+    border-radius: var(--radius);
+}
+
+.btn-block { width: 100%; justify-content: center; }
+
+.btn-duolingo {
+    background: var(--primary);
+    color: white;
+    font-weight: 800;
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 4px 0 #3a8c00, 0 6px 20px var(--primary-glow);
+}
+
+.btn-duolingo:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #3a8c00, 0 8px 25px var(--primary-glow);
+}
+
+.btn-duolingo:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #3a8c00;
+}
+
+/* ==============================================
+   CONTAINER + CATEGORY ROWS (Netflix Style)
+   ============================================== */
+.category-section {
+    padding: 2rem 4rem;
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.category-header h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.category-badge {
+    background: rgba(88,204,2,0.2);
+    color: var(--primary);
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.content-row {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 0.5rem 0;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.content-row::-webkit-scrollbar {
+    height: 6px;
+}
+
+.content-row::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.content-row::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+}
+
+/* Netflix-style Card */
+.content-card {
+    min-width: 280px;
+    max-width: 280px;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: var(--transition);
+    scroll-snap-align: start;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.content-card:hover {
+    transform: scale(1.05);
+    background: var(--bg-card-hover);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(88,204,2,0.2);
+    z-index: 10;
+}
+
+.content-card-body {
+    padding: 1.2rem;
+}
+
+.content-card-title {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.content-card-meta {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.content-tag {
+    background: rgba(88,204,2,0.15);
+    color: var(--primary);
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.content-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.content-link:hover { color: var(--primary); }
+
+/* ==============================================
+   DUOLINGO STAT CARDS (Gamification)
+   ============================================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 2rem 4rem;
+}
+
+.stat-card-duo {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card-duo::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--blue));
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.stat-card-duo:hover::before { opacity: 1; }
+
+.stat-card-duo:hover {
+    transform: translateY(-4px);
+    background: var(--bg-card-hover);
+    border-color: rgba(88,204,2,0.2);
+}
+
+.stat-icon-duo {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value-duo {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--primary);
+    line-height: 1.2;
+}
+
+.stat-label-duo {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Lingot/XP counter style */
+.stat-lingot {
+    background: linear-gradient(135deg, var(--secondary), #ff6600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ==============================================
+   DUOLINGO PROGRESS RING
+   ============================================== */
+.progress-ring-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.progress-ring {
+    position: relative;
+    width: 160px;
+    height: 160px;
+}
+
+.progress-ring svg {
+    transform: rotate(-90deg);
+    width: 160px;
+    height: 160px;
+}
+
+.progress-ring .bg {
+    fill: none;
+    stroke: rgba(255,255,255,0.05);
+    stroke-width: 10;
+}
+
+.progress-ring .progress {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-dasharray: 440;
+    stroke-dashoffset: 440;
+    transition: stroke-dashoffset 1s ease;
+}
+
+.progress-ring .center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.progress-ring .center-text .value {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--text-primary);
+}
+
+.progress-ring .center-text .label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ==============================================
+   DUOLINGO STREAK BADGE
+   ============================================== */
+.streak-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, rgba(255,150,0,0.15), rgba(255,102,0,0.1));
+    border: 1px solid rgba(255,150,0,0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.streak-badge.fire { color: var(--secondary); }
+.streak-badge.safe { color: var(--text-muted); }
+
+/* ==============================================
+   MOTIVATION BANNER (Duolingo style)
+   ============================================== */
+.motivation-banner-duo {
+    background: linear-gradient(135deg, rgba(88,204,2,0.15), rgba(28,176,246,0.1));
+    border: 1px solid rgba(88,204,2,0.2);
+    border-radius: var(--radius);
+    padding: 1.5rem 2rem;
+    margin: 0 4rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    backdrop-filter: blur(10px);
+}
+
+.motivation-banner-duo .icon {
+    font-size: 2rem;
+}
+
+.motivation-banner-duo .text {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* ==============================================
+   FORMS (Duolingo Style)
+   ============================================== */
+.form-container {
+    max-width: 480px;
+    margin: 6rem auto;
+    padding: 0 1.5rem;
+}
+
+.form-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 3rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: var(--shadow-lg);
+}
+
+.form-card h1 {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+}
+
+.form-card .subtitle {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    font-size: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-sm);
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    transition: var(--transition);
+    font-family: var(--font);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-glow);
+    background: rgba(255,255,255,0.08);
+}
+
+.form-input::placeholder {
+    color: var(--text-muted);
+}
+
+/* ==============================================
+   TIMER (Duolingo + Netflix)
+   ============================================== */
+.timer-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: radial-gradient(ellipse at center, rgba(88,204,2,0.05) 0%, transparent 70%);
+}
+
+.timer-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 3rem;
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: var(--shadow-lg);
+}
+
+.timer-card h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.timer-display {
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--primary);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 3px;
+    margin: 1.5rem 0;
+    text-shadow: 0 0 30px var(--primary-glow);
+}
+
+.timer-meta {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: rgba(255,255,255,0.03);
+    border-radius: var(--radius-xs);
+}
+
+.timer-meta-item {
+    text-align: center;
+}
+
+.timer-meta-item .label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.timer-meta-item .value {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.timer-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ==============================================
+   VIDEO LIST (Duolingo style)
+   ============================================== */
+.video-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.video-card-sm {
+    flex: 1;
+    min-width: 250px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: var(--transition);
+}
+
+.video-card-sm:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(88,204,2,0.2);
+    transform: translateX(4px);
+}
+
+.video-card-sm .play-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(88,204,2,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.video-card-sm .info { flex: 1; min-width: 0; }
+
+.video-card-sm .title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.video-card-sm .topic {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.video-card-sm .topic-badge {
+    background: rgba(206,130,255,0.15);
+    color: var(--purple);
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* ==============================================
+   RETENTION / RISK (Duolingo Gauge)
+   ============================================== */
+.risk-gauge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.risk-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.risk-dot.high { background: var(--pink); box-shadow: 0 0 10px rgba(255,75,75,0.5); }
+.risk-dot.medium { background: var(--secondary); box-shadow: 0 0 10px rgba(255,150,0,0.5); }
+.risk-dot.low { background: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
+
+.risk-value {
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+/* ==============================================
+   DUOLINGO LEAGUE / LEADERBOARD STYLE
+   ============================================== */
+.level-badge {
+    background: linear-gradient(135deg, var(--purple), #a855f7);
+    padding: 0.25rem 1rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    box-shadow: 0 2px 10px rgba(206,130,255,0.3);
+}
+
+.xp-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.xp-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--blue));
+    border-radius: 20px;
+    transition: width 1s ease;
+}
+
+/* ==============================================
+   RESPONSIVE
+   ============================================== */
+@media (max-width: 992px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); padding: 1.5rem 2rem; }
+    .navbar { padding: 1rem 2rem; }
+    .hero { padding: 6rem 2rem 3rem; }
+    .hero h1 { font-size: 2.5rem; }
+    .category-section { padding: 1.5rem 2rem; }
+    .motivation-banner-duo { margin: 0 2rem 1rem; }
+}
+
+@media (max-width: 576px) {
+    .stats-grid { grid-template-columns: 1fr; padding: 1rem; }
+    .navbar { padding: 0.8rem 1rem; }
+    .navbar-brand { font-size: 1.3rem; }
+    .navbar-nav { gap: 0; }
+    .nav-link { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
+    .hero { padding: 5rem 1rem 2rem; }
+    .hero h1 { font-size: 1.8rem; }
+    .hero p { font-size: 1rem; }
+    .category-section { padding: 1rem; }
+    .content-card { min-width: 220px; max-width: 220px; }
+    .motivation-banner-duo { margin: 0 1rem 0.5rem; padding: 1rem; flex-direction: column; text-align: center; }
+    .form-card { padding: 1.5rem; }
+    .timer-display { font-size: 3.5rem; }
+}
+
+/* ==============================================
+   ANIMATIONS
+   ============================================== */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px var(--primary-glow); }
+    50% { box-shadow: 0 0 40px var(--primary-glow); }
+}
+
+.pulse-glow {
+    animation: pulse-glow 2s infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.float {
+    animation: float 3s ease-in-out infinite;
+}
+
