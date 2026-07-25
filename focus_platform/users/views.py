@@ -10,7 +10,7 @@ from videos.models import Video, WatchHistory
 from ai_engine.churn_predictor import predict_churn
 
 def home(request):
-    return HttpResponse("Welcome to Focus Platform")
+    return redirect("dashboard")
 
 
 def onboarding(request):
@@ -54,6 +54,20 @@ def dashboard(request):
 
     consistency_score = min(100, streak * 10)
 
+    days_inactive = 0
+    if not sessions.filter(session_date=today).exists():
+        last_session = sessions.order_by("-session_date").first()
+        if last_session:
+            days_inactive = (today - last_session.session_date).days
+        else:
+            days_inactive = 30
+
+    churn_risk = predict_churn(
+        streak,
+        total_sessions,
+        days_inactive
+    )
+
     if churn_risk > 0.7:
         motivation = "High risk detected. Start a quick 10-minute focus session now."
     elif streak >= 5:
@@ -62,12 +76,8 @@ def dashboard(request):
         motivation = "Good consistency. Stay focused."
     else:
         motivation = "Start your streak today."
-    churn_risk = predict_churn(
-        streak,
-        total_sessions,
-        days_inactive
-    )
-    # DAY 6 VIDEO RECOMMENDATION LOGIC
+
+    all_videos = Video.objects.all()
     user_goal = profile.goal if profile else ""
 
     watched_topics = WatchHistory.objects.filter(
@@ -75,13 +85,12 @@ def dashboard(request):
     ).values_list("video__topic", flat=True)
 
     ranked_videos = sorted(
-        video,
-        key=lambda video: calculate_video_score(video, user_goal)
-        + (2000 if video.topic in watched_topics else 0),
+        all_videos,
+        key=lambda v: calculate_video_score(v, user_goal)
+        + (2000 if v.topic in watched_topics else 0),
         reverse=True
     )
 
-  
     top_videos = ranked_videos[:3]
 
     context = {
@@ -92,6 +101,7 @@ def dashboard(request):
         "motivation": motivation,
         "top_videos": top_videos,
         "total_videos": total_videos,
+        "churn_risk": churn_risk,
     }
 
     return render(request, "users/dashboard.html", context)
